@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agents at Work — Episode Hub</title>
+<meta name="description" content="Every episode of Agents at Work, the podcast about the people building AI agents. Hosted by Julia Fedorin at Composio.">
+<meta property="og:title" content="Agents at Work — Episode Hub">
+<meta property="og:description" content="Conversations with the founders and builders shaping AI agents. All episodes, one place.">
+<meta name="theme-color" content="#0005FD">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;700&family=Jersey+10+Charted&display=swap" rel="stylesheet">
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   HOW TO ADD AN EPISODE (takes ~10 seconds):
+   1. Copy any block between { } below and paste it at the TOP
+      of the list (newest first).
+   2. youtubeId = the part of the YouTube URL after "watch?v="
+      e.g. youtube.com/watch?v=JiU6_xAe87g  →  "JiU6_xAe87g"
+      The thumbnail is pulled automatically from that ID.
+   3. xUrl is optional — link to your launch tweet/thread.
+   4. Save, redeploy (or just git push). Done.
+   ═══════════════════════════════════════════════════════════════ */
+const EPISODES = [
+  {
+    number: 10,
+    guest: "Cailyn Yong",
+    company: "Momo",
+    title: "She Quit $10K/Month, Launched Unfinished, and Got 400 Users Overnight",
+    blurb: "She walked away from $10K/month, shipped before it was ready, and woke up to 400 users.",
+    duration: "1:14:20",
+    date: "Jul 2026",
+    youtubeId: "eJh-olHA_vU",
+  },
+  {
+    number: 9,
+    guest: "Daniel Dhawan",
+    company: "Rork",
+    title: "From Physics Dropout to the World's Largest AI Mobile App Builder",
+    blurb: "How a physics dropout ended up running the world's largest AI mobile-app builder.",
+    duration: "1:15:38",
+    date: "Jun 2026",
+    youtubeId: "YnZZAViIRSc",
+  },
+  {
+    number: 8,
+    guest: "Conor Brennan-Burke",
+    company: "HyperSpell",
+    title: "The “Company Brain” Startup That 5X’d During YC",
+    blurb: "Turning scattered company docs into agent-ready context — and 5x’ing through YC doing it.",
+    duration: "1:21:28",
+    date: "Jun 2026",
+    youtubeId: "hu6q6OuaD04",
+  },
+  {
+    number: 7,
+    guest: "Nish",
+    company: "HydraDB",
+    title: "He Raised $6.5M With Three Words",
+    blurb: "The three-word pitch that raised $6.5M, and the database bet underneath it.",
+    duration: "40:19",
+    date: "Jun 2026",
+    youtubeId: "FEc9GBqHWHw",
+  },
+  {
+    number: 6,
+    guest: "Divyansh",
+    company: "LayerNorm",
+    title: "The Hidden Cost of Betting on One AI Provider",
+    blurb: "What really breaks when your product is locked to a single AI provider.",
+    duration: "19:47",
+    date: "Jun 2026",
+    youtubeId: "BFYKQ6v93sY",
+  },
+  {
+    number: 5,
+    guest: "Houston AI",
+    company: "No-code AI agents",
+    title: "They Built an AI Agent for People Who Can’t Code — And It Spread Overnight",
+    blurb: "An AI agent for people who can’t code that spread overnight. What made it stick.",
+    duration: "29:49",
+    date: "May 2026",
+    youtubeId: "eHGiMXQzBHw",
+  },
+  {
+    number: 4,
+    guest: "Anthony Azrak",
+    company: "General Magic",
+    title: "This Founder Killed a Working Product to Build a $7.2M Startup",
+    blurb: "Why he killed a product that worked — and what replaced it became a $7.2M startup.",
+    duration: "48:32",
+    date: "May 2026",
+    youtubeId: "LJwBzxzAcrs",
+  },
+  {
+    number: 3,
+    guest: "Tejas Bhakta",
+    company: "Morph",
+    title: "He Grew Up in a Motel. Now He Builds the Infra Behind Your AI Coding Tools",
+    blurb: "From a motel upbringing to building the fast-apply infrastructure behind today’s AI coding tools.",
+    duration: "47:11",
+    date: "Apr 2026",
+    youtubeId: "awZTs_12t_o",
+  },
+  /* ── EP.02 needs its YouTube link ───────────────────────────────
+     "How this YC Startup Secures AI Agents" (Founder, Clam).
+     Couldn't find the video ID automatically. To add it back:
+     copy any block above, set number:2, paste the youtubeId, and
+     fill the guest name. Then re-deploy.
+  {
+    number: 2,
+    guest: "REPLACE — founder name",
+    company: "Clam",
+    title: "How this YC Startup Secures AI Agents",
+    blurb: "Securing autonomous agents: what breaks when you let AI act, and how a YC startup locks it down.",
+    duration: "30:27",
+    date: "Apr 2026",
+    youtubeId: "REPLACE_ME",
+  },
+  ─────────────────────────────────────────────────────────────── */
+  {
+    number: 1,
+    guest: "Dhravya Shah",
+    company: "Supermemory",
+    title: "Building AI Agents with Memory",
+    blurb: "How to give agents long-term memory — building the context layer that lets AI remember.",
+    duration: "30:08",
+    date: "Mar 2026",
+    youtubeId: "BTBXKCYVFRc",
+  },
+];
+
+/* Your channels — update these once */
+const LINKS = {
+  youtube: "https://www.youtube.com/@composio",
+  x: "https://x.com/juliafedorin",
+  spotify: "https://open.spotify.com/show/4fxtM0FC4FxTR4l9NRgWsj",
+};
+</script>
+
+<style>
+  :root{
+    --blue:#0005FD;        /* AAW electric blue */
+    --blue-deep:#0004C9;   /* darker blue for cards */
+    --green:#83FD00;       /* AAW acid green */
+    --white:#FFFFFF;
+    --black:#000000;
+    --dim:rgba(255,255,255,.68);
+    --line:rgba(255,255,255,.28);
+    --serif:'Instrument Serif', Georgia, serif;
+    --sans:'Inter', system-ui, sans-serif;      /* Diatype stand-in */
+    --pixel:'Jersey 10 Charted', monospace;     /* the logo pixel face */
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--blue); color:var(--white);
+    font-family:var(--sans); font-size:16px; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color:inherit; }
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--green); outline-offset:3px; border-radius:2px;
+  }
+  ::selection{ background:var(--green); color:var(--black); }
+  .wrap{ max-width:1060px; margin:0 auto; padding:0 24px; }
+
+  /* ── header ─────────────────────────────── */
+  header{
+    border-bottom:1px solid var(--line);
+    position:sticky; top:0; background:color-mix(in srgb, var(--blue) 90%, transparent);
+    backdrop-filter:blur(8px); z-index:10;
+  }
+  .bar{ display:flex; align-items:center; justify-content:space-between; padding:12px 0; gap:16px; }
+  .mark{
+    font-family:var(--serif); font-size:24px; line-height:1;
+    text-decoration:none; display:flex; align-items:center; gap:10px; white-space:nowrap;
+  }
+  .mark em{ font-style:italic; }
+  .px-dot{
+    width:12px; height:12px; background:var(--green); flex:none;
+    clip-path:polygon(33% 0,66% 0,66% 33%,100% 33%,100% 66%,66% 66%,66% 100%,33% 100%,33% 66%,0 66%,0 33%,33% 33%);
+    animation:blink 2.2s steps(1) infinite;
+  }
+  @keyframes blink{ 0%,80%{ opacity:1; } 90%{ opacity:.25; } 100%{ opacity:1; } }
+  @media (prefers-reduced-motion: reduce){ .px-dot{ animation:none; } }
+  nav{ display:flex; gap:6px; flex-wrap:wrap; }
+  nav a{
+    font-family:var(--sans); font-weight:500; font-size:12.5px; text-decoration:none;
+    padding:7px 13px; border:1px solid var(--line); border-radius:99px;
+    transition:border-color .15s, background .15s, color .15s;
+  }
+  nav a:hover{ background:var(--green); border-color:var(--green); color:var(--black); }
+
+  /* ── hero ───────────────────────────────── */
+  .hero{ padding:76px 0 0; }
+  .kicker{
+    font-family:var(--sans); font-weight:700; font-size:12px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--green); display:flex; align-items:center; gap:10px;
+  }
+  h1{
+    font-family:var(--serif); font-weight:400;
+    font-size:clamp(48px, 8.4vw, 104px); line-height:.98; letter-spacing:-.005em;
+    margin:20px 0 22px; max-width:14ch;
+  }
+  h1 em{ font-style:italic; color:var(--green); }
+  .lede{ max-width:54ch; color:var(--dim); font-size:18px; }
+  .lede strong{ color:var(--white); font-weight:600; }
+
+  /* signature: pixel waveform, stepped like the brand's pixel motif */
+  .wave{ display:block; width:100%; height:60px; margin:48px 0 0; image-rendering:pixelated; }
+  .wave rect{ fill:var(--white); opacity:.85; transform-origin:center bottom; }
+  .wave rect:nth-child(6n){ fill:var(--green); opacity:1; }
+  @media (prefers-reduced-motion: no-preference){
+    .wave rect{ animation:bounce 1.4s steps(4) infinite alternate; }
+    @keyframes bounce{ from{ transform:scaleY(.25);} to{ transform:scaleY(1);} }
+  }
+
+  /* ── sections ───────────────────────────── */
+  .section-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    border-top:1px solid var(--white); padding-top:14px; margin:68px 0 26px;
+  }
+  .section-head h2{
+    font-family:var(--serif); font-weight:400; font-style:italic;
+    font-size:26px; line-height:1;
+  }
+  .count{ font-family:var(--pixel); font-size:20px; color:var(--green); letter-spacing:.04em; }
+
+  /* featured (latest) episode */
+  .feature{
+    display:grid; grid-template-columns:1.15fr 1fr; gap:0;
+    background:var(--blue-deep); border:1px solid var(--line); border-radius:14px;
+    overflow:hidden;
+  }
+  .feature .thumb{ position:relative; aspect-ratio:16/9; background:var(--black); }
+  .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .thumb .play{
+    position:absolute; inset:0; display:grid; place-items:center;
+    background:linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,.35));
+  }
+  .play svg{ width:58px; height:58px; filter:drop-shadow(0 4px 14px rgba(0,0,0,.4)); transition:transform .15s; }
+  a.thumb-link:hover .play svg{ transform:scale(1.07); }
+  .feature .meta{ padding:30px 32px; display:flex; flex-direction:column; gap:12px; }
+  .timecode{
+    font-size:12.5px; color:var(--dim); font-weight:500;
+    display:flex; gap:14px; flex-wrap:wrap; align-items:baseline;
+  }
+  .timecode .ep{ font-family:var(--pixel); font-size:22px; color:var(--green); line-height:1; }
+  .feature h3{ font-family:var(--serif); font-weight:400; font-size:32px; line-height:1.08; }
+  .guestline{ font-size:14px; color:var(--dim); }
+  .guestline b{ color:var(--white); font-weight:600; }
+  .blurb{ font-size:15px; color:var(--dim); }
+  .actions{ display:flex; gap:10px; margin-top:auto; padding-top:14px; flex-wrap:wrap; }
+  .btn{
+    font-family:var(--sans); font-weight:700; font-size:13px; text-decoration:none;
+    padding:11px 18px; border-radius:99px; border:1px solid var(--green);
+    transition:background .15s, color .15s, border-color .15s;
+  }
+  .btn.primary{ background:var(--green); color:var(--black); }
+  .btn.primary:hover{ background:var(--white); border-color:var(--white); }
+  .btn.ghost{ color:var(--white); border-color:var(--line); }
+  .btn.ghost:hover{ border-color:var(--green); color:var(--green); }
+
+  /* episode grid */
+  .grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; }
+  .card{
+    background:var(--blue-deep); border:1px solid var(--line); border-radius:12px;
+    overflow:hidden; display:flex; flex-direction:column;
+    transition:transform .15s, border-color .15s;
+  }
+  .card:hover{ transform:translateY(-3px); border-color:var(--green); }
+  .card .thumb{ position:relative; aspect-ratio:16/9; background:var(--black); }
+  .card .body{ padding:16px 18px 18px; display:flex; flex-direction:column; gap:8px; flex:1; }
+  .card h3{ font-family:var(--serif); font-weight:400; font-size:21px; line-height:1.15; }
+  .card .links{
+    margin-top:auto; padding-top:12px; display:flex; gap:16px;
+    font-size:12.5px; font-weight:500;
+  }
+  .card .links a{ text-decoration:none; border-bottom:1px solid var(--line); padding-bottom:1px; }
+  .card .links a:hover{ border-color:var(--green); color:var(--green); }
+
+  /* footer */
+  footer{
+    margin-top:84px; border-top:1px solid var(--white);
+    padding:34px 0 60px;
+  }
+  .foot{ display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; align-items:flex-start; }
+  .foot .who{ max-width:46ch; color:var(--dim); font-size:14px; }
+  .foot .who b{ color:var(--white); }
+  .foot .who a{ color:var(--green); }
+  .foot nav{ justify-content:flex-end; }
+
+  @media (max-width:860px){
+    .feature{ grid-template-columns:1fr; }
+    .grid{ grid-template-columns:repeat(2,1fr); }
+    .hero{ padding-top:52px; }
+  }
+  @media (max-width:560px){
+    .grid{ grid-template-columns:1fr; }
+    .feature .meta{ padding:22px 20px; }
+    nav a{ padding:6px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="mark" href="#top"><span class="px-dot" aria-hidden="true"></span>Agents <em>at</em> Work</a>
+    <nav aria-label="Listen elsewhere" id="nav-links"></nav>
+  </div>
+</header>
+
+<main class="wrap" id="top">
+  <section class="hero">
+    <p class="kicker"><span class="px-dot" aria-hidden="true"></span>A podcast by Composio</p>
+    <h1>The people building AI agents, <em>on the record.</em></h1>
+    <p class="lede"><strong>Agents at Work</strong> is Composio's founder podcast, hosted by <strong>Julia Fedorin</strong> — conversations with the builders turning autonomous agents from demos into products. Every episode, one place.</p>
+    <svg class="wave" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 1000 60" id="waveform"></svg>
+  </section>
+
+  <div class="section-head">
+    <h2>Latest episode</h2>
+    <span class="count" id="latest-code"></span>
+  </div>
+  <section id="featured" aria-label="Latest episode"></section>
+
+  <div class="section-head">
+    <h2>All episodes</h2>
+    <span class="count" id="ep-count"></span>
+  </div>
+  <section class="grid" id="episodes" aria-label="Episode archive"></section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <p class="who"><b>Hosted by Julia Fedorin</b>, Podcaster &amp; Content Lead at <a href="https://composio.dev" target="_blank" rel="noopener">Composio</a>. New episodes weekly — follow along for launch threads, clips, and behind-the-scenes.</p>
+    <nav aria-label="Social links" id="foot-links"></nav>
+  </div>
+</footer>
+
+<script>
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const thumbUrl = id => `https://img.youtube.com/vi/${encodeURIComponent(id)}/hqdefault.jpg`;
+  const watchUrl = id => `https://www.youtube.com/watch?v=${encodeURIComponent(id)}`;
+
+  /* nav + footer links */
+  const navHtml = `
+    <a href="${LINKS.youtube}" target="_blank" rel="noopener">YouTube</a>
+    <a href="${LINKS.x}" target="_blank" rel="noopener">X / Twitter</a>
+    <a href="${LINKS.spotify}" target="_blank" rel="noopener">Spotify</a>`;
+  document.getElementById('nav-links').innerHTML = navHtml;
+  document.getElementById('foot-links').innerHTML = navHtml;
+
+  /* pixel waveform — chunky stepped bars, deterministic */
+  (() => {
+    const svg = document.getElementById('waveform');
+    const bars = 64; let seed = 7; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+    let html = '';
+    for (let i = 0; i < bars; i++) {
+      const h = Math.round((10 + rnd() * 46) / 8) * 8; /* snap heights to an 8px grid */
+      html += `<rect x="${(i * 1000 / bars).toFixed(1)}" y="${60 - h}" width="9" height="${h}" style="animation-delay:${(rnd() * -1.4).toFixed(2)}s"></rect>`;
+    }
+    svg.innerHTML = html;
+  })();
+
+  const playSvg = `<svg viewBox="0 0 58 58" aria-hidden="true"><circle cx="29" cy="29" r="28" fill="#83FD00"/><path d="M23 18l18 11-18 11z" fill="#000"/></svg>`;
+
+  const eps = [...EPISODES].sort((a, b) => b.number - a.number);
+  const pad = n => 'EP.' + String(n).padStart(2, '0');
+
+  /* featured = newest */
+  const f = eps[0];
+  if (f) {
+    document.getElementById('latest-code').textContent = `${pad(f.number)}`;
+    document.getElementById('featured').innerHTML = `
+      <article class="feature">
+        <a class="thumb thumb-link" href="${watchUrl(f.youtubeId)}" target="_blank" rel="noopener" aria-label="Watch episode ${f.number} on YouTube">
+          <img src="${thumbUrl(f.youtubeId)}" alt="${esc(f.guest)} on Agents at Work" loading="lazy">
+          <span class="play">${playSvg}</span>
+        </a>
+        <div class="meta">
+          <p class="timecode"><span class="ep">${pad(f.number)}</span><span>${esc(f.duration)}</span><span>${esc(f.date)}</span></p>
+          <h3>${esc(f.title)}</h3>
+          <p class="guestline">with <b>${esc(f.guest)}</b> · ${esc(f.company)}</p>
+          <p class="blurb">${esc(f.blurb)}</p>
+          <div class="actions">
+            <a class="btn primary" href="${watchUrl(f.youtubeId)}" target="_blank" rel="noopener">▶ Watch on YouTube</a>
+            ${f.xUrl ? `<a class="btn ghost" href="${esc(f.xUrl)}" target="_blank" rel="noopener">Thread on X</a>` : ''}
+          </div>
+        </div>
+      </article>`;
+  }
+
+  /* archive grid = the rest */
+  document.getElementById('ep-count').textContent = `${eps.length} eps`;
+  document.getElementById('episodes').innerHTML = eps.slice(1).map(e => `
+    <article class="card">
+      <a class="thumb thumb-link" href="${watchUrl(e.youtubeId)}" target="_blank" rel="noopener" aria-label="Watch episode ${e.number} on YouTube">
+        <img src="${thumbUrl(e.youtubeId)}" alt="${esc(e.guest)} on Agents at Work" loading="lazy">
+        <span class="play">${playSvg}</span>
+      </a>
+      <div class="body">
+        <p class="timecode"><span class="ep">${pad(e.number)}</span><span>${esc(e.duration)}</span><span>${esc(e.date)}</span></p>
+        <h3>${esc(e.title)}</h3>
+        <p class="guestline">with <b>${esc(e.guest)}</b> · ${esc(e.company)}</p>
+        <div class="links">
+          <a href="${watchUrl(e.youtubeId)}" target="_blank" rel="noopener">Watch ↗</a>
+          ${e.xUrl ? `<a href="${esc(e.xUrl)}" target="_blank" rel="noopener">X thread ↗</a>` : ''}
+        </div>
+      </div>
+    </article>`).join('');
+</script>
+</body>
+</html>
