@@ -341,8 +341,11 @@ const LINKS = {
     .feature{ grid-template-columns:1fr; }
     .grid{ grid-template-columns:repeat(2,1fr); }
     .hero{ padding-top:52px; }
-    .hero-top{ grid-template-columns:1fr; gap:32px; }
-    .hero-art{ justify-self:start; max-width:340px; order:-1; }
+  }
+  /* hero stays two-column (art on the right) until genuinely phone-width */
+  @media (max-width:620px){
+    .hero-top{ grid-template-columns:1fr; gap:26px; }
+    .hero-art{ justify-self:center; max-width:320px; }
   }
   @media (max-width:560px){
     .grid{ grid-template-columns:1fr; }
