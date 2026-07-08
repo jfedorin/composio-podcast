@@ -23,6 +23,9 @@
    3. xUrl is optional — link to your launch tweet/thread.
    4. Save, redeploy (or just git push). Done.
    ═══════════════════════════════════════════════════════════════ */
+/* Each episode is ONE entry. Fill youtubeId and/or spotifyId — the site
+   shows a YouTube and/or Spotify icon automatically, no duplicate cards.
+   youtubeId = the part after watch?v=   |   spotifyId = the part after /episode/ */
 const EPISODES = [
   {
     number: 10,
@@ -33,6 +36,7 @@ const EPISODES = [
     duration: "1:14:20",
     date: "Jul 2026",
     youtubeId: "eJh-olHA_vU",
+    spotifyId: "0xQNTYXQncIejrCpF7CxCN",
   },
   {
     number: 9,
@@ -43,6 +47,7 @@ const EPISODES = [
     duration: "1:15:38",
     date: "Jun 2026",
     youtubeId: "YnZZAViIRSc",
+    spotifyId: "5YKE0CYt1cZEheo8BfYbEa",
   },
   {
     number: 8,
@@ -53,6 +58,7 @@ const EPISODES = [
     duration: "1:21:28",
     date: "Jun 2026",
     youtubeId: "hu6q6OuaD04",
+    spotifyId: "403cCLpVEu0lWkNtRuWKS5",
   },
   {
     number: 7,
@@ -63,6 +69,7 @@ const EPISODES = [
     duration: "40:19",
     date: "Jun 2026",
     youtubeId: "FEc9GBqHWHw",
+    spotifyId: "7wy4YdCJcKt3BsDvzKVhYF",
   },
   {
     number: 6,
@@ -73,6 +80,7 @@ const EPISODES = [
     duration: "19:47",
     date: "Jun 2026",
     youtubeId: "BFYKQ6v93sY",
+    spotifyId: "", // TODO: not found automatically — paste the /episode/ id from Spotify
   },
   {
     number: 5,
@@ -83,6 +91,7 @@ const EPISODES = [
     duration: "29:49",
     date: "May 2026",
     youtubeId: "eHGiMXQzBHw",
+    spotifyId: "7G4Si1ii5qWhh2JTc3w2Jq",
   },
   {
     number: 4,
@@ -93,6 +102,7 @@ const EPISODES = [
     duration: "48:32",
     date: "May 2026",
     youtubeId: "LJwBzxzAcrs",
+    spotifyId: "4crk1ijLWVaSjhgJELBsqS",
   },
   {
     number: 3,
@@ -103,23 +113,19 @@ const EPISODES = [
     duration: "47:11",
     date: "Apr 2026",
     youtubeId: "awZTs_12t_o",
+    spotifyId: "6WTbYNYQdigP2QJeYRbhCs",
   },
-  /* ── EP.02 needs its YouTube link ───────────────────────────────
-     "How this YC Startup Secures AI Agents" (Founder, Clam).
-     Couldn't find the video ID automatically. To add it back:
-     copy any block above, set number:2, paste the youtubeId, and
-     fill the guest name. Then re-deploy.
   {
     number: 2,
-    guest: "REPLACE — founder name",
+    guest: "Vaibhav Agrawal",
     company: "Clam",
     title: "How this YC Startup Secures AI Agents",
-    blurb: "Securing autonomous agents: what breaks when you let AI act, and how a YC startup locks it down.",
+    blurb: "A semantic firewall for AI agents — blocking the request that nearly leaked his dad’s tax data.",
     duration: "30:27",
     date: "Apr 2026",
-    youtubeId: "REPLACE_ME",
+    youtubeId: "", // TODO: not found automatically — paste the watch?v= id from YouTube
+    spotifyId: "3HBg8QhnFJNnYmUy238HEc",
   },
-  ─────────────────────────────────────────────────────────────── */
   {
     number: 1,
     guest: "Dhravya Shah",
@@ -129,6 +135,7 @@ const EPISODES = [
     duration: "30:08",
     date: "Mar 2026",
     youtubeId: "BTBXKCYVFRc",
+    spotifyId: "6MzQuau30kPPKnSkQkI92Q",
   },
 ];
 
@@ -293,6 +300,28 @@ const LINKS = {
   .foot .who a{ color:var(--green); }
   .foot nav{ justify-content:flex-end; }
 
+  /* platform icon links (one card, YouTube + Spotify) */
+  .plats{ margin-top:auto; padding-top:12px; display:flex; gap:10px; flex-wrap:wrap; }
+  .plat{
+    display:inline-flex; align-items:center; gap:6px; text-decoration:none;
+    font-size:12px; font-weight:600; padding:6px 11px; border-radius:99px;
+    border:1px solid var(--line); color:var(--white); line-height:1;
+    transition:border-color .15s, color .15s;
+  }
+  .plat svg{ width:15px; height:15px; }
+  .plat:hover{ border-color:var(--green); color:var(--green); }
+
+  /* branded placeholder thumb when an episode has no YouTube video */
+  .thumb.ph{
+    display:grid; place-items:center; text-decoration:none;
+    background:radial-gradient(130% 150% at 18% 0%, var(--blue) 0%, var(--blue-deep) 72%);
+  }
+  .thumb.ph .ph-in{ text-align:center; padding:18px; }
+  .thumb.ph .ph-ep{ display:block; font-family:var(--pixel); font-size:34px; color:var(--green); line-height:1; }
+  .thumb.ph .ph-guest{ display:block; font-family:var(--serif); font-size:22px; margin-top:8px; }
+  .thumb.ph .ph-sub{ display:block; font-size:11.5px; color:var(--dim); margin-top:8px; letter-spacing:.02em; }
+  .thumb.ph:hover .ph-sub{ color:var(--green); }
+
   @media (max-width:860px){
     .feature{ grid-template-columns:1fr; }
     .grid{ grid-template-columns:repeat(2,1fr); }
@@ -346,6 +375,39 @@ const LINKS = {
   const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const thumbUrl = id => `https://img.youtube.com/vi/${encodeURIComponent(id)}/hqdefault.jpg`;
   const watchUrl = id => `https://www.youtube.com/watch?v=${encodeURIComponent(id)}`;
+  const spotifyUrl = id => `https://open.spotify.com/episode/${encodeURIComponent(id)}`;
+
+  /* platform glyphs (inherit text color) */
+  const ytIcon = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23 7.5a3 3 0 0 0-2.1-2.1C19 4.9 12 4.9 12 4.9s-7 0-8.9.5A3 3 0 0 0 1 7.5 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.5a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5A3 3 0 0 0 23 16.5 31 31 0 0 0 23.5 12 31 31 0 0 0 23 7.5ZM9.8 15.3V8.7l5.7 3.3-5.7 3.3Z"/></svg>`;
+  const spIcon = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.82-.88 7.09-.51 9.72 1.1.3.18.39.57.21.86Zm1.23-2.74a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.98-1.17a.78.78 0 1 1-.45-1.49c3.64-1.1 8.16-.56 11.24 1.33.37.22.48.7.26 1.07Zm.11-2.85c-3.23-1.92-8.55-2.1-11.63-1.16a.94.94 0 1 1-.55-1.8c3.53-1.07 9.4-.86 13.12 1.35a.94.94 0 0 1-.94 1.61Z"/></svg>`;
+
+  const pad = n => 'EP.' + String(n).padStart(2, '0');
+
+  /* platform icon links — one card, an icon per platform the episode is on */
+  const platLinks = e => {
+    let out = '';
+    if (e.youtubeId) out += `<a class="plat yt" href="${watchUrl(e.youtubeId)}" target="_blank" rel="noopener" aria-label="Watch episode ${e.number} on YouTube">${ytIcon}YouTube</a>`;
+    if (e.spotifyId) out += `<a class="plat sp" href="${spotifyUrl(e.spotifyId)}" target="_blank" rel="noopener" aria-label="Listen to episode ${e.number} on Spotify">${spIcon}Spotify</a>`;
+    return out;
+  };
+
+  /* thumbnail: YouTube still if available, else a branded placeholder that links to Spotify */
+  const thumbBlock = e => {
+    if (e.youtubeId) return `
+      <a class="thumb thumb-link" href="${watchUrl(e.youtubeId)}" target="_blank" rel="noopener" aria-label="Watch episode ${e.number} on YouTube">
+        <img src="${thumbUrl(e.youtubeId)}" alt="${esc(e.guest)} on Agents at Work" loading="lazy">
+        <span class="play">${playSvg}</span>
+      </a>`;
+    const href = e.spotifyId ? spotifyUrl(e.spotifyId) : '#';
+    return `
+      <a class="thumb thumb-link ph" href="${href}" target="_blank" rel="noopener" aria-label="Listen to episode ${e.number} on Spotify">
+        <span class="ph-in">
+          <span class="ph-ep">${pad(e.number)}</span>
+          <span class="ph-guest">${esc(e.guest)}</span>
+          <span class="ph-sub">${e.spotifyId ? 'Listen on Spotify ↗' : ''}</span>
+        </span>
+      </a>`;
+  };
 
   /* nav + footer links */
   const navHtml = `
@@ -370,7 +432,6 @@ const LINKS = {
   const playSvg = `<svg viewBox="0 0 58 58" aria-hidden="true"><circle cx="29" cy="29" r="28" fill="#83FD00"/><path d="M23 18l18 11-18 11z" fill="#000"/></svg>`;
 
   const eps = [...EPISODES].sort((a, b) => b.number - a.number);
-  const pad = n => 'EP.' + String(n).padStart(2, '0');
 
   /* featured = newest */
   const f = eps[0];
@@ -378,18 +439,15 @@ const LINKS = {
     document.getElementById('latest-code').textContent = `${pad(f.number)}`;
     document.getElementById('featured').innerHTML = `
       <article class="feature">
-        <a class="thumb thumb-link" href="${watchUrl(f.youtubeId)}" target="_blank" rel="noopener" aria-label="Watch episode ${f.number} on YouTube">
-          <img src="${thumbUrl(f.youtubeId)}" alt="${esc(f.guest)} on Agents at Work" loading="lazy">
-          <span class="play">${playSvg}</span>
-        </a>
+        ${thumbBlock(f)}
         <div class="meta">
           <p class="timecode"><span class="ep">${pad(f.number)}</span><span>${esc(f.duration)}</span><span>${esc(f.date)}</span></p>
           <h3>${esc(f.title)}</h3>
           <p class="guestline">with <b>${esc(f.guest)}</b> · ${esc(f.company)}</p>
           <p class="blurb">${esc(f.blurb)}</p>
           <div class="actions">
-            <a class="btn primary" href="${watchUrl(f.youtubeId)}" target="_blank" rel="noopener">▶ Watch on YouTube</a>
-            ${f.xUrl ? `<a class="btn ghost" href="${esc(f.xUrl)}" target="_blank" rel="noopener">Thread on X</a>` : ''}
+            ${f.youtubeId ? `<a class="btn primary" href="${watchUrl(f.youtubeId)}" target="_blank" rel="noopener">▶ Watch on YouTube</a>` : ''}
+            ${f.spotifyId ? `<a class="btn ${f.youtubeId ? 'ghost' : 'primary'}" href="${spotifyUrl(f.spotifyId)}" target="_blank" rel="noopener">Listen on Spotify</a>` : ''}
           </div>
         </div>
       </article>`;
@@ -399,18 +457,12 @@ const LINKS = {
   document.getElementById('ep-count').textContent = `${eps.length} eps`;
   document.getElementById('episodes').innerHTML = eps.slice(1).map(e => `
     <article class="card">
-      <a class="thumb thumb-link" href="${watchUrl(e.youtubeId)}" target="_blank" rel="noopener" aria-label="Watch episode ${e.number} on YouTube">
-        <img src="${thumbUrl(e.youtubeId)}" alt="${esc(e.guest)} on Agents at Work" loading="lazy">
-        <span class="play">${playSvg}</span>
-      </a>
+      ${thumbBlock(e)}
       <div class="body">
         <p class="timecode"><span class="ep">${pad(e.number)}</span><span>${esc(e.duration)}</span><span>${esc(e.date)}</span></p>
         <h3>${esc(e.title)}</h3>
         <p class="guestline">with <b>${esc(e.guest)}</b> · ${esc(e.company)}</p>
-        <div class="links">
-          <a href="${watchUrl(e.youtubeId)}" target="_blank" rel="noopener">Watch ↗</a>
-          ${e.xUrl ? `<a href="${esc(e.xUrl)}" target="_blank" rel="noopener">X thread ↗</a>` : ''}
-        </div>
+        <div class="plats">${platLinks(e)}</div>
       </div>
     </article>`).join('');
 </script>
