@@ -8,6 +8,9 @@
 <meta property="og:title" content="Agents at Work — Episode Hub">
 <meta property="og:description" content="Agents at Work is a podcast where storyteller Julia Fedorin goes deep with founders building on the frontier of AI.">
 <meta name="theme-color" content="#0004C9">
+<!-- Plausible analytics — outbound-links variant also logs clicks to composio.dev / YouTube / Spotify.
+     data-domain MUST match the site you add in your Plausible dashboard. -->
+<script defer data-domain="agents-at-work-site.vercel.app" src="https://plausible.io/js/script.outbound-links.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;700&family=Jersey+10+Charted&display=swap" rel="stylesheet">
@@ -148,7 +151,7 @@ const LINKS = {
   youtube: "https://www.youtube.com/@composio",
   x: "https://x.com/juliafedorin",
   spotify: "https://open.spotify.com/show/4fxtM0FC4FxTR4l9NRgWsj",
-  composio: "https://composio.dev",
+  composio: "https://composio.dev/?utm_source=agents-at-work&utm_medium=referral&utm_campaign=podcast-hub",
 };
 </script>
 
@@ -400,7 +403,7 @@ const LINKS = {
 
 <footer>
   <div class="wrap foot">
-    <p class="who"><b>Hosted by Julia Fedorin</b>, Podcaster &amp; Content Lead at <a href="https://composio.dev" target="_blank" rel="noopener">Composio</a>. New episodes weekly — follow along for launch threads, clips, and behind-the-scenes.</p>
+    <p class="who"><b>Hosted by Julia Fedorin</b>, Podcaster &amp; Content Lead at <a href="https://composio.dev/?utm_source=agents-at-work&utm_medium=referral&utm_campaign=podcast-hub" target="_blank" rel="noopener">Composio</a>. New episodes weekly — follow along for launch threads, clips, and behind-the-scenes.</p>
     <nav aria-label="Social links" id="foot-links"></nav>
   </div>
 </footer>
