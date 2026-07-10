@@ -31,6 +31,17 @@
    youtubeId = the part after watch?v=   |   spotifyId = the part after /episode/ */
 const EPISODES = [
   {
+    number: 11,
+    guest: "Philip Kiely",
+    company: "Baseten",
+    title: "“I'm Not Worried About an AI Bubble” — The $13B Company Proving It",
+    blurb: "Why the $13B inference company isn't sweating the AI bubble — and where he thinks the real moat is.",
+    duration: "",   // TODO: add the runtime — YouTube didn't expose it automatically
+    date: "Jul 2026",
+    youtubeId: "4E4K6vCHX-k",
+    spotifyId: "",  // TODO: not on Spotify yet — paste the /episode/ id once it's published
+  },
+  {
     number: 10,
     guest: "Cailyn Yong",
     company: "Momo",
@@ -421,6 +432,12 @@ const LINKS = {
 
   const pad = n => 'EP.' + String(n).padStart(2, '0');
 
+  /* episode timecode — skips duration/date if not filled in yet */
+  const timecode = e =>
+    `<span class="ep">${pad(e.number)}</span>` +
+    (e.duration ? `<span>${esc(e.duration)}</span>` : '') +
+    (e.date ? `<span>${esc(e.date)}</span>` : '');
+
   /* platform icon links — one card, an icon per platform the episode is on */
   const platLinks = e => {
     let out = '';
@@ -481,7 +498,7 @@ const LINKS = {
       <article class="feature">
         ${thumbBlock(f)}
         <div class="meta">
-          <p class="timecode"><span class="ep">${pad(f.number)}</span><span>${esc(f.duration)}</span><span>${esc(f.date)}</span></p>
+          <p class="timecode">${timecode(f)}</p>
           <h3>${esc(f.title)}</h3>
           <p class="guestline">with <b>${esc(f.guest)}</b> · ${esc(f.company)}</p>
           <p class="blurb">${esc(f.blurb)}</p>
@@ -500,7 +517,7 @@ const LINKS = {
     <article class="card">
       ${thumbBlock(e)}
       <div class="body">
-        <p class="timecode"><span class="ep">${pad(e.number)}</span><span>${esc(e.duration)}</span><span>${esc(e.date)}</span></p>
+        <p class="timecode">${timecode(e)}</p>
         <h3>${esc(e.title)}</h3>
         <p class="guestline">with <b>${esc(e.guest)}</b> · ${esc(e.company)}</p>
         <div class="plats">${platLinks(e)}</div>
