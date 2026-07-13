@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://agents-at-work-site.vercel.app/sitemap.xml

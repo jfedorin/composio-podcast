@@ -430,8 +430,15 @@ const LINKS = {
   const ytIcon = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23 7.5a3 3 0 0 0-2.1-2.1C19 4.9 12 4.9 12 4.9s-7 0-8.9.5A3 3 0 0 0 1 7.5 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.5a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5A3 3 0 0 0 23 16.5 31 31 0 0 0 23.5 12 31 31 0 0 0 23 7.5ZM9.8 15.3V8.7l5.7 3.3-5.7 3.3Z"/></svg>`;
   const spIcon = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.6 14.4a.62.62 0 0 1-.86.21c-2.35-1.44-5.3-1.76-8.79-.96a.62.62 0 1 1-.28-1.21c3.82-.88 7.09-.51 9.72 1.1.3.18.39.57.21.86Zm1.23-2.74a.78.78 0 0 1-1.07.26c-2.69-1.65-6.79-2.13-9.98-1.17a.78.78 0 1 1-.45-1.49c3.64-1.1 8.16-.56 11.24 1.33.37.22.48.7.26 1.07Zm.11-2.85c-3.23-1.92-8.55-2.1-11.63-1.16a.94.94 0 1 1-.55-1.8c3.53-1.07 9.4-.86 13.12 1.35a.94.94 0 0 1-.94 1.61Z"/></svg>`;
   const xIcon = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z"/></svg>`;
+  const trIcon = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 2h8l4 4v16H6V2Zm7.5 1.5V7H17l-3.5-3.5ZM8 11h8v1.5H8V11Zm0 3.4h8v1.5H8v-1.5ZM8 7.6h4v1.5H8V7.6Z"/></svg>`;
 
   const pad = n => 'EP.' + String(n).padStart(2, '0');
+
+  /* episode page slug — MUST stay in sync with epSlug() in build.mjs */
+  const slugify = s => String(s).toLowerCase().normalize('NFKD')
+    .replace(/[̀-ͯ]/g, '').replace(/['’]/g, '')
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  const epSlug = e => slugify(`${e.guest} ${e.company || ''}`) || `episode-${e.number}`;
 
   /* episode timecode — skips duration/date if not filled in yet */
   const timecode = e =>
@@ -445,6 +452,7 @@ const LINKS = {
     if (e.youtubeId) out += `<a class="plat yt" href="${watchUrl(e.youtubeId)}" target="_blank" rel="noopener" aria-label="Watch episode ${e.number} on YouTube">${ytIcon}YouTube</a>`;
     if (e.spotifyId) out += `<a class="plat sp" href="${spotifyUrl(e.spotifyId)}" target="_blank" rel="noopener" aria-label="Listen to episode ${e.number} on Spotify">${spIcon}Spotify</a>`;
     if (e.xUrl) out += `<a class="plat x" href="${esc(e.xUrl)}" target="_blank" rel="noopener" aria-label="Read the launch thread for episode ${e.number} on X">${xIcon}X</a>`;
+    out += `<a class="plat tr" href="/episodes/${epSlug(e)}/" aria-label="Read the transcript for episode ${e.number}">${trIcon}Transcript</a>`;
     return out;
   };
 
@@ -507,6 +515,7 @@ const LINKS = {
             ${f.youtubeId ? `<a class="btn primary" href="${watchUrl(f.youtubeId)}" target="_blank" rel="noopener">▶ Watch on YouTube</a>` : ''}
             ${f.spotifyId ? `<a class="btn ${f.youtubeId ? 'ghost' : 'primary'}" href="${spotifyUrl(f.spotifyId)}" target="_blank" rel="noopener">Listen on Spotify</a>` : ''}
             ${f.xUrl ? `<a class="btn ghost" href="${esc(f.xUrl)}" target="_blank" rel="noopener">Watch on X</a>` : ''}
+            <a class="btn ghost" href="/episodes/${epSlug(f)}/">Read transcript</a>
           </div>
         </div>
       </article>`;
