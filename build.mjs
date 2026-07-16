@@ -34,14 +34,28 @@ if (!dataScript) { console.error('ERROR: could not find EPISODES in index.html')
 const { EPISODES, LINKS } = new Function(dataScript + '\nreturn { EPISODES, LINKS };')();
 
 /* ── transcript helpers ─────────────────────────────────────────────────── */
+/* YouTube's VTT escapes characters (e.g. ">" as "&gt;"). Decode them here, or the
+   page template escapes the "&" a second time and readers literally see "&gt;". */
+const decodeEntities = s => s
+  .replace(/&#(\d+);/g, (_, d) => String.fromCharCode(+d))
+  .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCharCode(parseInt(h, 16)))
+  .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+  .replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&nbsp;/g, ' ')
+  .replace(/&amp;/g, '&');   // must run last
+
 function vttToText(vtt) {
   const out = [];
   for (let line of vtt.split(/\r?\n/)) {
     if (!line) continue;
     if (/^(WEBVTT|Kind:|Language:|NOTE)/.test(line)) continue;
     if (line.includes('-->')) continue;
-    if (line.includes('<')) continue;                 // skip the animated (duplicated) caption lines
-    line = line.replace(/\[[^\]]*\]/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
+    if (line.includes('<')) continue;   // animated/duplicated caption line (carries <c> tags).
+                                        // Checked BEFORE decoding, so "&lt;" can't trip it.
+    line = decodeEntities(line)
+      .replace(/\[[^\]]*\]/g, ' ')   // [music], [applause], …
+      .replace(/>>+/g, ' ')          // YouTube's speaker-change marker: scattered unreliably
+                                     // (often mid-sentence), so drop it rather than break on it
+      .replace(/\s+/g, ' ').trim();
     if (!line) continue;
     if (out.length && out[out.length - 1] === line) continue;  // dedupe consecutive repeats
     out.push(line);
@@ -49,7 +63,8 @@ function vttToText(vtt) {
   return out.join(' ').replace(/\s+/g, ' ').trim();
 }
 function paragraphs(text) {
-  const sents = text.match(/[^.!?]+[.!?]+(?:\s|$)|[^.!?]+$/g) || [text];
+  const sents = text.replace(/>>+/g, ' ').replace(/\s+/g, ' ')
+    .match(/[^.!?]+[.!?]+(?:\s|$)|[^.!?]+$/g) || [text];
   const paras = [];
   for (let i = 0; i < sents.length; i += 4) paras.push(sents.slice(i, i + 4).join('').trim());
   return paras.filter(Boolean);
