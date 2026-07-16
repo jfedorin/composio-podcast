@@ -240,15 +240,6 @@ const LINKS = {
 
   /* ── hero ───────────────────────────────── */
   .hero{ padding:76px 0 0; }
-  .hero-top{
-    display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,0.65fr);
-    gap:48px; align-items:center;
-  }
-  .hero-art{ justify-self:end; width:100%; max-width:420px; }
-  .hero-art img{
-    width:100%; height:auto; display:block; border-radius:18px;
-    border:1px solid var(--line);
-  }
   .kicker{
     font-family:var(--sans); font-weight:700; font-size:12px; letter-spacing:.16em;
     text-transform:uppercase; color:var(--green); display:flex; align-items:center; gap:10px;
@@ -374,11 +365,6 @@ const LINKS = {
     .grid{ grid-template-columns:repeat(2,1fr); }
     .hero{ padding-top:52px; }
   }
-  /* hero stays two-column (art on the right) until genuinely phone-width */
-  @media (max-width:620px){
-    .hero-top{ grid-template-columns:1fr; gap:26px; }
-    .hero-art{ justify-self:center; max-width:320px; }
-  }
   @media (max-width:560px){
     .grid{ grid-template-columns:1fr; }
     .feature .meta{ padding:22px 20px; }
@@ -403,9 +389,6 @@ const LINKS = {
         <h1>Come for the agents. <em>Stay for the humans behind them.</em></h1>
         <p class="lede"><strong>Agents at Work</strong> is a podcast where storyteller <strong>Julia Fedorin</strong> goes deep with founders building on the frontier of AI.</p>
         <p class="lede">We chat about where they came from, what shaped them, and why they're obsessed with what they're obsessed with.</p>
-      </div>
-      <div class="hero-art">
-        <img src="cover.jpg" alt="Agents at Work — a podcast by Composio" width="800" height="800">
       </div>
     </div>
     <svg class="wave" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 1000 60" id="waveform"></svg>
