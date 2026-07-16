@@ -244,11 +244,18 @@ const LINKS = {
     font-family:var(--sans); font-weight:700; font-size:12px; letter-spacing:.16em;
     text-transform:uppercase; color:var(--green); display:flex; align-items:center; gap:10px;
   }
+  /* Hero headline: two full-bleed lines. Each line is sized in cqw (% of the
+     hero container's width), so both stay flush edge-to-edge at every viewport
+     — and cap automatically once .wrap hits its 1060px max. The two lines have
+     different sizes because they have different character counts. */
+  .hero-copy{ container-type:inline-size; }
   h1{
     font-family:var(--serif); font-weight:400;
-    font-size:clamp(48px, 8.4vw, 104px); line-height:.98; letter-spacing:-.005em;
-    margin:20px 0 22px; max-width:14ch;
+    line-height:.9; letter-spacing:-.015em; margin:20px 0 22px;
   }
+  h1 .line{ display:block; white-space:nowrap; }
+  h1 .line-1{ font-size:14.5cqw; }
+  h1 .line-2{ font-size:8.3cqw; }
   h1 em{ font-style:italic; color:var(--green); }
   .lede{ max-width:54ch; color:var(--dim); font-size:18px; }
   .lede + .lede{ margin-top:14px; }
@@ -386,7 +393,10 @@ const LINKS = {
     <div class="hero-top">
       <div class="hero-copy">
         <p class="kicker"><span class="px-dot" aria-hidden="true"></span>A podcast by Composio</p>
-        <h1>Come for the agents. <em>Stay for the humans behind them.</em></h1>
+        <h1>
+          <span class="line line-1">Come for the agents.</span>
+          <span class="line line-2"><em>Stay for the humans behind them.</em></span>
+        </h1>
         <p class="lede"><strong>Agents at Work</strong> is a podcast where storyteller <strong>Julia Fedorin</strong> goes deep with founders building on the frontier of AI.</p>
         <p class="lede">We chat about where they came from, what shaped them, and why they're obsessed with what they're obsessed with.</p>
       </div>
