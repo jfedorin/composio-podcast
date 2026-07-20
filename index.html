@@ -244,18 +244,17 @@ const LINKS = {
     font-family:var(--sans); font-weight:700; font-size:12px; letter-spacing:.16em;
     text-transform:uppercase; color:var(--green); display:flex; align-items:center; gap:10px;
   }
-  /* Hero headline: two full-bleed lines. Each line is sized in cqw (% of the
-     hero container's width), so both stay flush edge-to-edge at every viewport
-     — and cap automatically once .wrap hits its 1060px max. The two lines have
-     different sizes because they have different character counts. */
+  /* Hero headline: full-bleed. Sized in cqw (% of the hero container's width)
+     so it stays flush edge-to-edge at every viewport — and caps automatically
+     once .wrap hits its 1060px max. Retune the cqw value if the wording
+     changes: a longer line needs a smaller number. */
   .hero-copy{ container-type:inline-size; }
   h1{
     font-family:var(--serif); font-weight:400;
     line-height:.9; letter-spacing:-.015em; margin:20px 0 22px;
   }
   h1 .line{ display:block; white-space:nowrap; }
-  h1 .line-1{ font-size:14.5cqw; }
-  h1 .line-2{ font-size:8.3cqw; }
+  h1 .line-1{ font-size:12.2cqw; }
   h1 em{ font-style:italic; color:var(--green); }
   .lede{ max-width:54ch; color:var(--dim); font-size:18px; }
   .lede + .lede{ margin-top:14px; }
@@ -394,8 +393,7 @@ const LINKS = {
       <div class="hero-copy">
         <p class="kicker"><span class="px-dot" aria-hidden="true"></span>A podcast by Composio</p>
         <h1>
-          <span class="line line-1">Come for the agents.</span>
-          <span class="line line-2"><em>Stay for the humans behind them.</em></span>
+          <span class="line line-1">Behind the AI revolution</span>
         </h1>
         <p class="lede">Every AI agent has a human origin story, a weird childhood obsession, a failed startup, a 3am conviction nobody else shared.</p>
         <p class="lede"><strong>Julia Fedorin</strong> gets founders to tell the story they don’t tell on stage.</p>
