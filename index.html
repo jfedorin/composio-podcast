@@ -306,7 +306,7 @@ const LINKS = {
 
   /* featured (latest) episode */
   .feature{
-    display:grid; grid-template-columns:1.15fr 1fr; gap:0;
+    display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:0;
     background:var(--blue-deep); border:1px solid var(--line); border-radius:14px;
     overflow:hidden;
   }
@@ -448,7 +448,9 @@ const LINKS = {
 
 <script>
   const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-  const thumbUrl = id => `https://img.youtube.com/vi/${encodeURIComponent(id)}/hqdefault.jpg`;
+  /* maxresdefault = the full 1280×720 custom thumbnail; fall back to hqdefault if a video has none */
+  const thumbUrl = id => `https://img.youtube.com/vi/${encodeURIComponent(id)}/maxresdefault.jpg`;
+  const thumbFallback = id => `https://img.youtube.com/vi/${encodeURIComponent(id)}/hqdefault.jpg`;
   const watchUrl = id => `https://www.youtube.com/watch?v=${encodeURIComponent(id)}`;
   const spotifyUrl = id => `https://open.spotify.com/episode/${encodeURIComponent(id)}`;
 
@@ -486,7 +488,7 @@ const LINKS = {
   const thumbBlock = e => {
     if (e.youtubeId) return `
       <a class="thumb thumb-link" href="${watchUrl(e.youtubeId)}" target="_blank" rel="noopener" aria-label="Watch episode ${e.number} on YouTube">
-        <img src="${thumbUrl(e.youtubeId)}" alt="${esc(e.guest)} on Agents at Work" loading="lazy">
+        <img src="${thumbUrl(e.youtubeId)}" alt="${esc(e.guest)} on Agents at Work" loading="lazy" onerror="this.onerror=null;this.src='${thumbFallback(e.youtubeId)}'">
         <span class="play">${playSvg}</span>
       </a>`;
     const href = e.spotifyId ? spotifyUrl(e.spotifyId) : '#';
